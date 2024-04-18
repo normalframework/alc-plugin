@@ -1,0 +1,21 @@
+{
+  "search.exclude": {
+    "**/dist": true,
+    "src/proto": true
+  },
+  "debug.javascript.autoAttachFilter": "disabled",
+  "json.schemas": [
+    {
+      "fileMatch": ["*.hook.json"],
+      "url": "./node_modules/@normalframework/applications-sdk/dist/sdk/schemas/custom/TestHookRunRequest.json"
+    },
+    {
+      "fileMatch": ["app.json"],
+      "url": "./node_modules/@normalframework/applications-sdk/dist/sdk/schemas/CreateApplicationRequest.json"
+    },
+    {
+      "fileMatch": ["hooks-update/*.json"],
+      "url": "./node_modules/@normalframework/applications-sdk/dist/sdk/schemas/UpdateHookRequest.json"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "layer": {
+    "name": "alc",
+    "components": ["location", "control_program", "name"],
+    "component_types": ["PATH", "TAG", "TEXT"],
+    "indexed": true,
+    "default_display_attrs": ["location", "control_program", "name"],
+    "default_grouping_attrs": ["location", "control_program"]
+  }
+}

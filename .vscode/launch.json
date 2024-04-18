@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "command": "npm start",
+      "name": "Debug Dev Server",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npx @normalframework/applications-sdk run -f ${relativeFile}",
+      "name": "Debug Script",
+      "request": "launch",
+      "type": "node-terminal",
+      "autoAttachChildProcesses": true
+    }
+  ],
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "hookFile",
+      "description": "Choose Hook File"
+    },
+    {
+      "type": "promptString",
+      "id": "configFile",
+      "description": "Choose Config File"
+    }
+  ]
+}
