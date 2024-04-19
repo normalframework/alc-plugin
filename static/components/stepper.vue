@@ -179,3 +179,8 @@ export default {
   }
 }
 </script>
+<style>
+.v-stepper-window {
+  overflow: auto;
+}
+</style>
