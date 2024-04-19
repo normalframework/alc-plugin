@@ -172,7 +172,6 @@ export default {
       this.uploadState = {};
     },
     getRowStyle: params => {
-      console.log(params.node)
       if (params.node.data.action === 'Update') {
         return { background: '#90EE90' };
       }

@@ -34035,7 +34035,7 @@
         }
         updatePoints(points) {
             return __awaiter$3(this, void 0, void 0, function* () {
-                const result = yield this.pointClient.updatePoints({ points: points.map(({ attrs, uuid }) => Point.create({ attrs, uuid })) });
+                const result = yield this.pointClient.updatePoints({ points: points.map(({ attrs, uuid, layer }) => Point.create({ attrs, uuid, layer })) });
                 return result.response.results;
             });
         }
