@@ -1,5 +1,5 @@
 <template>
-  <v-stepper v-model="step" :items="items" show-actions editable>
+  <v-stepper style="height: 100%; display: flex; flex-direction: column;" v-model="step" :items="items" show-actions editable>
     <template v-slot:item.1>
       <export-steps />
     </template>
@@ -7,8 +7,8 @@
     <template v-slot:item.2>
       <h3 class="text-h6">Select Exported file to upload</h3>
       <br>
-      <v-file-input ref="fileupload" clearable @change="handleFileUpload($event)" accept=".csv"
-        label="ALC Export" chips :loading="isLoading"></v-file-input>
+      <v-file-input ref="fileupload" clearable @change="handleFileUpload($event)" accept=".csv" label="ALC Export" chips
+        :loading="isLoading"></v-file-input>
     </template>
 
     <template v-slot:item.3>
@@ -179,11 +179,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.stepper {
-  display: flex;
-  height: 100%;
-  width: 100%;
-}
-</style>
