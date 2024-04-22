@@ -9,6 +9,8 @@
       <br>
       <v-file-input ref="fileupload" clearable @change="handleFileUpload($event)" accept=".csv" label="ALC Export" chips
         :loading="isLoading"></v-file-input>
+      <v-alert v-if="fileProcessingError" v-model="fileProcessingError" closable title="Error"
+        :text="fileProcessingError" type="error" variant="tonal"></v-alert>
     </template>
 
     <template v-slot:item.3>
@@ -21,7 +23,7 @@
         <ag-grid-vue :getRowStyle="getRowStyle" :columnDefs="columnDefs" :rowData="rowData"
           style="height: 600px; width: 100%; flex-grow: 1" class="ag-theme-alpine"></ag-grid-vue>
       </template>
-      <template v-else>
+      <template v-else-if="uploadState.status === 'success'">
         <v-card style="margin: 50px;" class="mx-auto" max-width="344">
           <v-card-text>
             <p class="text-h4 font-weight-black" style="color: green;">Import Success</p>
@@ -32,6 +34,16 @@
               <div class="text-h4">{{ uploadState.updatedCount }}</div>
             </div>
             <v-btn style="margin-top: 24px;" @click="uploadAnother">Upoad Another</v-btn>
+          </v-card-text>
+        </v-card>
+      </template>
+      <template v-else-if="uploadState.status === 'error'">
+        <v-card style="margin: 50px;" class="mx-auto" max-width="344">
+          <v-card-text>
+            <p class="text-h4 font-weight-black" style="color: red;">Import Error</p>
+            <div style="display: flex; align-items: center; margin-top: 10px; gap: 8px;">
+              <div class="text-h4">{{ uploadState.message }}</div>
+            </div>
           </v-card-text>
         </v-card>
       </template>
@@ -91,13 +103,20 @@ export default {
       { field: "I/O Type", sortable: true },
     ],
     rowData: [],
+    fileProcessingError: null,
     uploadState: {}
   }),
   watch: {
     async content() {
-      this.isLoading = true;
-      await this.processData();
-      this.isLoading = false;
+      try {
+        this.isLoading = true;
+        this.fileProcessingError = null;
+        await this.processData();
+      } catch (e) {
+        this.fileProcessingError = `Error processing file.${e.message ? " " + e.message : ""}`
+      } finally {
+        this.isLoading = false;
+      }
     }
   },
   methods: {
@@ -120,18 +139,24 @@ export default {
       });
     },
     async importData() {
-      this.isLoading = true;
-      const updates = this.rowData.filter(r => r.action === 'Update')
-        .map(r => ({ layer: 'alc', uuid: r.uuid, attrs: { name: r.Name, location: r.Location, control_program: r["Control Program"] } }))
+      try {
+        this.isLoading = true;
+        const updates = this.rowData.filter(r => r.action === 'Update')
+          .map(r => ({ layer: 'alc', uuid: r.uuid, attrs: { name: r.Name, location: r.Location, control_program: r["Control Program"] } }))
 
-      const chunks = this.chunk(updates, 100);
+        const chunks = this.chunk(updates, 100);
 
-      for (const points of chunks) {
-        await sdk.updatePoints(points);
+        for (const points of chunks) {
+          await sdk.updatePoints(points);
+        }
+        this.resetUploadState()
+        this.uploadState = { status: 'success', updatedCount: updates.length }
+      } catch (e) {
+        this.uploadState = { status: 'error', message: `Error uploading.${e.message ? " " + e.message : ""}` }
+      } finally {
+        this.loading = false;
       }
-      this.isLoading = false;
-      this.resetUploadState()
-      this.uploadState = { status: 'success', updatedCount: updates.length }
+
     },
     async processData() {
       if (!this.parsed) return;
