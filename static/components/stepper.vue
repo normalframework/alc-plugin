@@ -173,7 +173,7 @@ export default {
         let currentOffset = 0;
         const pageSize = 500;
         while (currentOffset <= totalCount) {
-          const res = await sdk.getPoints({ structuredQuery: query, pageSize, pageOffset: currentOffset });
+          const res = await sdk.getPoints({ structuredQuery: query, pageSize, pageOffset: currentOffset, masks: { "fieldMask": ["object_id"], "attrIncludeMask": ["object_id"] } });
           totalCount = res.totalCount;
           currentOffset = currentOffset + pageSize;
 
