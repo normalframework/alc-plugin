@@ -4,9 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.2.1/styles/ag-grid.min.css"
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.2.1/styles/ag-grid.css"
     />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community@31.2.1/styles/ag-theme-alpine.css"
+    />
+
     <script type="importmap">
       {
         "imports": {
@@ -18,16 +24,20 @@
     <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/vuetify@3.5.16/dist/vuetify.min.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
-      rel="stylesheet"
-    />
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/vuetify@3.5.16/dist/vuetify.min.css"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
+    rel="stylesheet"
+  />
+  
     <style>
       body {
         margin: 0;
+      }
+      :root {
+        --ag-icon-font-family: "agGridAlpine";
       }
     </style>
   </head>
@@ -44,7 +54,6 @@
       const { createApp } = Vue;
       const { createVuetify } = Vuetify;
       import { AgGridVue } from "agGridVue";
-
 
       const options = {
         moduleCache: {
