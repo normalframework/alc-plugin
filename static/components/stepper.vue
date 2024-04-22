@@ -1,5 +1,6 @@
 <template>
-  <v-stepper style="height: 100%; display: flex; flex-direction: column;" v-model="step" :items="items" show-actions editable>
+  <v-stepper style="height: 100%; display: flex; flex-direction: column;" v-model="step" :items="items" show-actions
+    editable>
     <template v-slot:item.1>
       <export-steps />
     </template>
@@ -53,25 +54,17 @@
 
 <script>
 import exportSteps from './export-steps.vue';
-
 var sdk = new nf(window.location.origin);
 
-const createPointQuery = (point) => ({
-  and: [
-    {
-      field: {
-        property: "device_id",
-        text: point?.["Device ID"].split(":")?.[1],
-      },
-    },
-    {
-      field: {
-        property: "object_id",
-        text: point?.["Object ID"].replace(":", "."),
-      },
-    },
-  ],
-});
+function groupBy(arr, selector) {
+  return arr.reduce(function (acc, x) {
+    const groupKey = selector(x);
+    if (!acc[groupKey]) { acc[groupKey] = []; }
+    acc[groupKey].push(x);
+    return acc;
+  }, {});
+};
+
 
 export default {
   components: {
@@ -90,7 +83,7 @@ export default {
       'Import to NF',
     ],
     columnDefs: [
-      { field: "action", sortable: true, sort: "desc" },
+      { field: "action", sortable: true, sort: "desc", valueGetter: (n) => n.data.action ? n.data.action : 'Skipped (point not defined)' },
       { field: "Location", sortable: true },
       { field: "Control Program", sortable: true },
       { field: "Name", sortable: true },
@@ -160,29 +153,47 @@ export default {
     },
     async processData() {
       if (!this.parsed) return;
-      const groups = this.chunk(this.content.data, 100);
-      for (const group of groups) {
-        const points = await sdk.getPoints({
-          or: group.map(createPointQuery),
-        });
+      const deviceGroups = groupBy(this.content.data, (r) => r["Device ID"])
+      console.log("device groups", deviceGroups)
+      for (const groupKey of Object.keys(deviceGroups)) {
+        const deviceGroup = deviceGroups[groupKey]
+        const query = {
+          and: [
+            {
+              field: {
+                property: "device_id",
+                text: groupKey.split(":")?.[1],
+              },
+            },
+          ]
+        }
+        console.log("query", query)
 
-        group.forEach((aclPoint) => {
-          const point = points.find((p) => {
-            return (
-              p.attrs.device_id === aclPoint?.["Device ID"].split(":")?.[1] &&
-              p.attrs.object_id ===
-              aclPoint?.["Object ID"].replace(":", ".").toLowerCase()
-            );
-          })
-          if (point) {
-            aclPoint.action = "Update";
-            aclPoint.uuid = point.uuid;
-          } else {
-            aclPoint.action = "Skip (point not defined)";
-          }
-        });
+        let totalCount = Infinity;
+        let currentOffset = 0;
+        const pageSize = 500;
+        while (currentOffset <= totalCount) {
+          const res = await sdk.getPoints({ structuredQuery: query, pageSize, pageOffset: currentOffset });
+          totalCount = res.totalCount;
+          currentOffset = currentOffset + pageSize;
+
+          const points = res.points;
+          deviceGroup.forEach((aclPoint) => {
+            const point = points.find((p) => {
+              return (
+                p.attrs.object_id ===
+                aclPoint?.["Object ID"].replace(":", ".").toLowerCase()
+              );
+            })
+            if (point) {
+              aclPoint.action = "Update";
+              aclPoint.uuid = point.uuid;
+            }
+          });
+        }
+
       }
-      this.rowData = groups.flatMap(g => g);
+      this.rowData = Object.values(deviceGroups).flatMap(g => g);
     },
     resetUploadState() {
       this.$refs.fileupload.reset()

@@ -33992,10 +33992,10 @@
                 return res.response.points;
             });
         }
-        getPoints(query) {
+        getPoints(request) {
             return __awaiter$3(this, void 0, void 0, function* () {
-                const res = yield this.pointClient.getPoints(GetPointsRequest.create({ pageSize: 1000, pageOffset: 0, layer: 'default', structuredQuery: query }));
-                return res.response.points;
+                const res = yield this.pointClient.getPoints(GetPointsRequest.create(Object.assign({ pageSize: 1000, pageOffset: 0, layer: 'default' }, request)));
+                return res.response;
             });
         }
         getData(uuids, from, to) {
@@ -34035,7 +34035,9 @@
         }
         updatePoints(points) {
             return __awaiter$3(this, void 0, void 0, function* () {
-                const result = yield this.pointClient.updatePoints({ points: points.map(({ attrs, uuid, layer }) => Point.create({ attrs, uuid, layer })) });
+                const result = yield this.pointClient.updatePoints({
+                    points: points.map(({ attrs, uuid, layer }) => Point.create({ attrs, uuid, layer })),
+                });
                 return result.response.results;
             });
         }
