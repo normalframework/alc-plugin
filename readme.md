@@ -59,3 +59,7 @@ The import data is added to the `ALC` layer in NF. Data can be grouped by the lo
 [install-screenshot]: images/install-screenshot.png
 [runs-menu-screenshot]: images/runs-menu.png
 [time-series-screenshot]: images/time-series.png
+
+## Notes
+
+This app is not sponsored or supported by Automatic Logic.
