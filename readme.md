@@ -8,7 +8,7 @@
 
   <h2 align="center">Automated Logic Import</h3>
   <p align="center">
-    A Normal Framework plugin that allows import of Automated Logic reports.
+    A Normal Framework plugin that allows import of Automated Logic equipment reports.
   </p>
 </div>
 
