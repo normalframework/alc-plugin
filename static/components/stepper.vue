@@ -154,8 +154,7 @@ export default {
     async processData() {
       if (!this.parsed) return;
       const deviceGroups = groupBy(this.content.data, (r) => r["Device ID"])
-      console.log("device groups", deviceGroups)
-      for (const groupKey of Object.keys(deviceGroups)) {
+      for (const groupKey of Object.keys(deviceGroups).filter(k => !!k)) {
         const deviceGroup = deviceGroups[groupKey]
         const query = {
           and: [
@@ -167,7 +166,6 @@ export default {
             },
           ]
         }
-        console.log("query", query)
 
         let totalCount = Infinity;
         let currentOffset = 0;
