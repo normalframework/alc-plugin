@@ -153,7 +153,8 @@ export default {
     },
     async processData() {
       if (!this.parsed) return;
-      const deviceGroups = groupBy(this.content.data, (r) => r["Device ID"])
+      const filtered = this.content.data.filter(r => r["Device ID"] && r["Object ID"]);
+      const deviceGroups = groupBy(filtered, (r) => r["Device ID"])
       for (const groupKey of Object.keys(deviceGroups).filter(k => !!k)) {
         const deviceGroup = deviceGroups[groupKey]
         const query = {
