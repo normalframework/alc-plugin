@@ -1,10 +1,26 @@
 {
   "layer": {
     "name": "alc",
-    "components": ["location", "control_program", "name"],
-    "component_types": ["PATH", "TAG", "TEXT"],
+    "components": [
+      "location",
+      "control_program",
+      "name"
+    ],
+    "componentTypes": [
+      "PATH",
+      "TAG",
+      "TEXT"
+    ],
     "indexed": true,
-    "default_display_attrs": ["location", "control_program", "name"],
-    "default_grouping_attrs": ["control_program", "location"]
-  }
+    "defaultDisplayAttrs": [
+      "location",
+      "control_program",
+      "name"
+    ],
+    "defaultGroupingAttrs": [
+      "control_program",
+      "location"
+    ]
+  },
+  "minNfVersion": "3.8.1-1"
 }
