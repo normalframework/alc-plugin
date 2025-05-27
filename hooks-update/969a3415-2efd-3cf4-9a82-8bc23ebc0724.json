@@ -1,0 +1,33 @@
+{
+  "name": "trend-setpoints",
+  "entryPoint": "/trend-setpoints.js",
+  "points": {
+    "layer": "default",
+    "query": {
+      "or": [
+        {
+          "field": {
+            "property": "name",
+            "text": "zone_temp_lo"
+          }
+        },
+        {
+          "field": {
+            "property": "name",
+            "text": "zone_temp_hi"
+          }
+        }
+      ]
+    },
+    "groups": {
+      "keys": [
+        "device_id"
+      ]
+    },
+    "labelAttribute": "name"
+  },
+  "schedule": {
+    "rrule": "DTSTART:20250526T040000Z\nRRULE:FREQ=SECONDLY;INTERVAL=30"
+  },
+  "mode": "MODE_SCHEDULED"
+}

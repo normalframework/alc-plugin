@@ -1,0 +1,35 @@
+{
+  "name": "find-setpoints",
+  "entryPoint": "/find-setpoints.js",
+  "points": {
+    "query": {
+      "and": [
+        {
+          "field": {
+            "property": "type",
+            "text": "OBJECT_FILE"
+          }
+        },
+        {
+          "field": {
+            "property": "prop_object_name",
+            "text": "PARS:PRG 1"
+          }
+        },
+        {
+          "field": {
+            "property": "bacnet_net",
+            "text": "2414"
+          }
+        }
+      ]
+    },
+    "groups": {
+      "keys": [
+        "device_id"
+      ]
+    },
+    "labelAttribute": "name"
+  },
+  "mode": "MODE_ON_REQUEST"
+}
