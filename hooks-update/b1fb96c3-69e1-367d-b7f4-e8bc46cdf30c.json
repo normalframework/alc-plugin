@@ -1,9 +1,12 @@
 {
   "name": "write-setpoints",
-  "entryPoint": "write-setpoints.js",
+  "entryPoint": "/write-setpoints.js",
   "points": {
     "labelAttribute": "name",
     "noPoints": true
   },
-  "mode": "MODE_ON_REQUEST"
+  "schedule": {
+    "rrule": "DTSTART:20250408T040000Z\nRRULE:FREQ=MINUTELY;INTERVAL=1"
+  },
+  "mode": "MODE_SCHEDULED"
 }

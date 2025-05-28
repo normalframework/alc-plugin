@@ -13,6 +13,8 @@ function sleep(ms) {
 
 module.exports = async ({ points, sdk, update, args }) => {
     console.log(points[0])
+    let res = await sdk.http.get("/api/v1/point/points-id?uuids=" + points[0].uuid)
+    console.log("parent", res.data.points[0].parentUuid)
     let offset = 0
     let chunksz = 400;
     let buffers = []
@@ -94,9 +96,11 @@ module.exports = async ({ points, sdk, update, args }) => {
                 "layer": "alc",
                 "uuid": v5("zone_temp_lo", points[0].uuid),
                 "name": "zone_temp_lo",
-                "parent_name": points[0].parent_name,
-                "parent_uuid": points[0].parent_uuid,
+                "description": "firmware temperature setpoint",
+                "parent_name": res.data.points[0].parentName,
+                "parent_uuid": res.data.points[0].parentUuid,
                 "type": "POINT",
+                "hpl_driver": "alc",
                 "attrs": {
                     "instance": points[0].attrs.instance,
                     "offset": offsetA.toString(),
@@ -108,8 +112,9 @@ module.exports = async ({ points, sdk, update, args }) => {
                 "layer": "alc",
                 "uuid": v5("zone_temp_hi", points[0].uuid),
                 "name": "zone_temp_hi",
-                "parent_name": points[0].parent_name,
-                "parent_uuid": points[0].parent_uuid,
+                "parent_name": res.data.points[0].parentName,
+                "parent_uuid": res.data.points[0].parentUuid,
+                "hpl_driver": "alc",
                 "type": "POINT",
                 "attrs": {
                     "instance": points[0].attrs.instance,

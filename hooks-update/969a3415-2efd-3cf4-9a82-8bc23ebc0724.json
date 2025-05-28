@@ -27,7 +27,12 @@
     "labelAttribute": "name"
   },
   "schedule": {
-    "rrule": "DTSTART:20250526T040000Z\nRRULE:FREQ=SECONDLY;INTERVAL=30"
+    "rrule": "DTSTART:20250526T040000Z\nRRULE:FREQ=MINUTELY;INTERVAL=15"
   },
-  "mode": "MODE_SCHEDULED"
+  "mode": "MODE_SCHEDULED",
+  "invokeTimeout": "300s",
+  "runtimeConfig": {
+    "memoryLimit": 256,
+    "maxInstances": 10
+  }
 }

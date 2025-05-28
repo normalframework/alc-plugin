@@ -20,7 +20,10 @@
     "defaultGroupingAttrs": [
       "control_program",
       "location"
-    ]
+    ],
+    "driver": {
+      "grpcService": "localhost:10001"
+    }
   },
   "minNfVersion": "3.7.0-1"
 }

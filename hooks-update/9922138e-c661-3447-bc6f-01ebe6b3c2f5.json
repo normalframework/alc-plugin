@@ -15,12 +15,6 @@
             "property": "prop_object_name",
             "text": "PARS:PRG 1"
           }
-        },
-        {
-          "field": {
-            "property": "bacnet_net",
-            "text": "2414"
-          }
         }
       ]
     },
@@ -31,5 +25,10 @@
     },
     "labelAttribute": "name"
   },
-  "mode": "MODE_ON_REQUEST"
+  "mode": "MODE_ON_REQUEST",
+  "invokeTimeout": "43260s",
+  "runtimeConfig": {
+    "memoryLimit": 256,
+    "maxInstances": 5
+  }
 }
