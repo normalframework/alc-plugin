@@ -5,20 +5,10 @@
     "query":  {
       "and":  [
         {
-          "and":  [
-            {
-              "field":  {
-                "property":  "type",
-                "text":  "OBJECT_FILE"
-              }
-            },
-            {
-              "field":  {
-                "property":  "bacnet_mac",
-                "text":  "10.31.208.100:47808"
-              }
-            }
-          ]
+          "field":  {
+            "property":  "type",
+            "text":  "OBJECT_FILE"
+          }
         },
         {
           "field":  {

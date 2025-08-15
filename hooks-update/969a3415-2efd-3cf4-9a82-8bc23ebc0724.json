@@ -1,38 +1,41 @@
 {
-  "name": "trend-setpoints",
-  "entryPoint": "/trend-setpoints.js",
-  "points": {
-    "layer": "default",
-    "query": {
-      "or": [
+  "name":  "trend-setpoints",
+  "entryPoint":  "/trend-setpoints.js",
+  "points":  {
+    "layer":  "default",
+    "query":  {
+      "or":  [
         {
-          "field": {
-            "property": "name",
-            "text": "zone_temp_lo"
+          "field":  {
+            "property":  "name",
+            "text":  "zone_temp_lo"
           }
         },
         {
-          "field": {
-            "property": "name",
-            "text": "zone_temp_hi"
+          "field":  {
+            "property":  "name",
+            "text":  "zone_temp_hi"
           }
         }
       ]
     },
-    "groups": {
-      "keys": [
+    "groups":  {
+      "keys":  [
         "device_id"
       ]
     },
-    "labelAttribute": "name"
+    "labelAttribute":  "name"
   },
-  "schedule": {
-    "rrule": "DTSTART:20250526T040000Z\nRRULE:FREQ=MINUTELY;INTERVAL=15"
+  "schedule":  {
+    "rrule":  "DTSTART:20250526T040000Z\nRRULE:FREQ=MINUTELY;INTERVAL=15"
   },
-  "mode": "MODE_SCHEDULED",
-  "invokeTimeout": "300s",
-  "runtimeConfig": {
-    "memoryLimit": 256,
-    "maxInstances": 10
+  "mode":  "MODE_SCHEDULED",
+  "invokeTimeout":  "300s",
+  "runtimeConfig":  {
+    "memoryLimit":  256,
+    "maxRequestsPerLifetime":  100000,
+    "lifetime":  "36000s",
+    "minInstances":  1,
+    "maxInstances":  10
   }
 }
