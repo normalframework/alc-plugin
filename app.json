@@ -25,5 +25,5 @@
       "grpcService": "localhost:10001"
     }
   },
-  "minNfVersion": "3.7.0-1"
+  "minNfVersion": "3.8.4-1"
 }

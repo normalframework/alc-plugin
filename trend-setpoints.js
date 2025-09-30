@@ -1,4 +1,5 @@
 const NormalSdk = require("@normalframework/applications-sdk");
+const { makeDeviceAddress } = require("./addresses.js")
 
 /**
  * Invoke hook function
@@ -12,9 +13,8 @@ module.exports = async ({ points, sdk, update, args }) => {
         for (let j = 0; j < 3; j++) {
             try {
                 res = await sdk.http.post("/api/v2/bacnet/confirmed-service", {
-                    "device_address": {
-                        "device_id": points[i].attrs.device_id,
-                    }, "request": {
+                    "device_address": makeDeviceAddress(points[i].attrs),
+                    "request": {
                         "atomic_read_file": {
                             "file_identifier": {
                                 "object_type": "OBJECT_TYPE_FILE",
